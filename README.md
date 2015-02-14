@@ -2,15 +2,15 @@ socket.io generator plugin
 =======================
 
 ## About
-Socket.io v1.xでイベントの登録にgenerator funcitonを利用するためのプラグインです。
+Socket.io v1.x縺ｧ繧､繝吶Φ繝医�ｮ逋ｻ骭ｲ縺ｫgenerator funciton繧貞茜逕ｨ縺吶ｋ縺溘ａ縺ｮ繝励Λ繧ｰ繧､繝ｳ縺ｧ縺吶�
 
 ## Required
 * Socket.IO v1.x
 * co v4
 
 ## Usage
-ミドルウェア
-require('./lib/module/socket.io-generator')(io);
+繝溘ラ繝ｫ繧ｦ繧ｧ繧｢  
+io.use('socket.io-generator');
 
 ## License
 licensed under MIT
