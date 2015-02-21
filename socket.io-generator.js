@@ -9,18 +9,20 @@ const isGeneratorFunction = function(obj) {
 module.exports = function(socket, next) {
 	['addEventListener', 'on', 'once'].forEach(function(name) {
 		let emitter = socket[name];
-		socket[name] = function(event, func) {
-			let self = this;
-			let handler = isGeneratorFunction(func) === false ? func : function() {
-				let args = Array.prototype.slice.call(arguments);
-				co(function*() {
-					yield func.apply({}, args);
-				}).catch(function(err) {
-					console.error(err.stack || err.toString());
-				});
-			};
-			emitter.call(self, event, handler);
-		};
+		Object.defineProperty(socket, name, {
+			value: function(event, func) {
+				let self = this;
+				let handler = isGeneratorFunction(func) === false ? func : function() {
+					let args = Array.prototype.slice.call(arguments);
+					co(function*() {
+						yield func.apply(self, args);
+					}).catch(function(err) {
+						console.error(err.stack || err.toString());
+					});
+				};
+				emitter.call(self, event, handler);
+			}
+		});
 	});
 	next();
 };
